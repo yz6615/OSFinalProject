@@ -31,9 +31,10 @@ unsigned int xorbuf(unsigned int *buffer, int size) {
     return result;
 }
 
-void performance(int blockSize, int blockCount, float duration, FILE* fWrite) {
-    int file = blockSize * blockCount / 1000000;
-    printf("Performance: %f MiB/s", file/duration);
+void performance(int blockSize, int blockCount, double duration, FILE* fWrite) {
+    unsigned int file = (blockCount / 1000000) * blockSize;
+	printf("File size: %d MB\n", file);
+    printf("Performance: %f MiB/s ", file/duration);
     fprintf(fWrite, "%d %f\n",blockSize, file/duration);
     
 }
@@ -51,6 +52,7 @@ void file_read(int blockSize, int blockCount, char *fileName, FILE* fWrite) {
 	else {
 		int r;
 		int count = 0;
+		printf("blockSize: %d\n", blockSize);
 		start = now();
 		while ((count < blockCount) && (r=read(fd, buf, blockSize)) > 0) {
 			//printf("r:%d\n", r);
@@ -70,7 +72,7 @@ int main(int argc, char *argv[]) {
     FILE *fWrite = fopen("data.txt","w");
     char * fileName; //file name
     int blockSize = 4;
-    int blockCount = 9999999;
+    int blockCount = 5000000;
     if (argc != 3) {
         printf("Invalid inputs");
 		return 0;
@@ -82,7 +84,7 @@ int main(int argc, char *argv[]) {
         
         while(blockSize <= 4096) {
             file_read(blockSize, blockCount, fileName, fWrite);
-            blockSize *= 4;
+            blockSize *= 2;
         }
     }
     fclose(fWrite);
