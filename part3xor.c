@@ -31,22 +31,22 @@ unsigned int xorbuf(unsigned int *buffer, int size) {
     return result;
 }
 
-float performance(int blockSize, int blockCount, float duration) {
+void performance(int blockSize, int blockCount, float duration, FILE* fWrite) {
     int file = blockSize * blockCount / 1000000;
-    printf("Performance: %f MiB/s\n", file/duration);
-    return file/duration;
+    printf("Performance: %f MiB/s", file/duration);
+    fprintf(fWrite, "%d %f\n",blockSize, file/duration);
+    
 }
 
-float file_read(int blockSize, int blockCount, char *fileName) {
+void file_read(int blockSize, int blockCount, char *fileName, FILE* fWrite) {
 	int size = blockSize/4;
 	double start, end;
 	unsigned int buf[size];
 	unsigned int xor = 0;
-    float perform;
 	int fd = open(fileName, O_RDONLY); //open the image file
 	if(fd == -1) {
 		printf("File error: %s -- could not be opened\n", fileName);
-		return 0;
+		return;
 	}
 	else {
 		int r;
@@ -59,21 +59,18 @@ float file_read(int blockSize, int blockCount, char *fileName) {
 			//continue;
 		}
 		end = now();
-        perform = performance(blockSize, blockCount, end - start);
+        performance(blockSize, blockCount, end - start, fWrite);
 		printf("Read Time: %f seconds\n", end - start);
-        return perform;
 	}
 	printf("xor: %08x\n", xor);
 	close(fd);
 }
 
 int main(int argc, char *argv[]) {
+    FILE *fWrite = fopen("data.txt","w");
     char * fileName; //file name
     int blockSize = 4;
     int blockCount = 9999999;
-    float performance[5];
-    int blockSizes[5];
-    int count = 0;
     if (argc != 3) {
         printf("Invalid inputs");
 		return 0;
@@ -81,17 +78,13 @@ int main(int argc, char *argv[]) {
 
     fileName = argv[1];
     
-    if (compareArrays(argv[2],"-r")) {  
+    if (compareArrays(argv[2],"-r")) {
+        
         while(blockSize <= 4096) {
-            performance[count] = file_read(blockSize, blockCount, fileName);
-            blockSizes[count] = blockSize;
+            file_read(blockSize, blockCount, fileName, fWrite);
             blockSize *= 4;
-            count++;
         }
     }
-    for (int i = 0; i < 5; i ++) {
-        printf("blocksize: %d\n", blockSizes[i]);
-        printf("performance: %f\n", performance[i]);
-    }
+    fclose(fWrite);
 	return 0;
 }
