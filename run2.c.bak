@@ -45,7 +45,7 @@ int file_read(int blockSize, char *fileName) {
 			
 		}
 	}
-	//printf("time: %f\n", curr - start);
+	printf("time: %f\n", curr - start);
 	//printf("xor: %08x\n", xor);
 	close(fd);
 	
