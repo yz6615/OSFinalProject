@@ -12,7 +12,7 @@ for line in file:
     blockSizeWithoutCache.append(line1[0])
     performanceWithoutCache.append(float(line1[1]))
     blockSizeWithCache.append(line2[0])
-    performanceWithCache.append(line2[1])
+    performanceWithCache.append(float(line2[1]))
     
 
 x1 = blockSizeWithoutCache
