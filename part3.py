@@ -13,5 +13,8 @@ y = performance
 plt.plot(x,y)
 plt.xlabel('blockSize')
 plt.ylabel('performance (MiB/s)')
-plt.savefig("matplotlib.png")
+plt.title('Performance Vs. BlockSize')
+for i,j in zip(x,y):
+    plt.text(i,j, str(j))
+plt.savefig("plotWithoutCache.png")
 file.close()
