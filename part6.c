@@ -60,7 +60,7 @@ void thread_read(int blockSize, int blockCount, char *fileName, int threadNum) {
 			args[i].blockSize = blockSize;
 			args[i].maxCount = maxCount;
 			args[i].fd = fd;
-			args[i].buf = (unsigned int *)malloc(offsetBlock);
+			args[i].buf = (unsigned int *)malloc(blockSize);
 			//printf("offsetBlock in read: %d\n", args[i].offsetBlock);
 			pthread_create(&child[i], NULL, child_thread, (void *)&args[i]);
 			//printf("offsetBlock in read done: %d\n", args[i].offsetBlock);
