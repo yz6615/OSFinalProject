@@ -5,4 +5,5 @@ gcc part2xor.c -o part2xor
 gcc part3xor.c -o part3xor
 gcc -pthread part6.c -o part6
 gcc -pthread part6_size.c -o part6_size
+gcc -pthread part6_size_no_cache.c -o part6_size_no_cache
 gcc run2.c -o run2
