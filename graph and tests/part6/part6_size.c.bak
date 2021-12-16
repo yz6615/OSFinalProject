@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
 	FILE *fWrite = fopen("thread_data_cache.txt","w");
     char * fileName; // file name
     int blockSize; // block size (divided by 4)
-    unsigned long blockCount = 4707541; // block count
+    unsigned long blockCount = 78346240; // block count
 	int threadNum = 1; // thread number (threadNum = blockCount // n)
 	
 	double start, end;
@@ -121,10 +121,10 @@ int main(int argc, char *argv[]) {
 
     fileName = argv[1];
 	
-	for (threadNum; threadNum < 64; threadNum *= 2){
+	for (threadNum; threadNum < 2; threadNum *= 2){
 		printf("threadNum: %d\n",threadNum);
-		for (blockSize = 512; blockSize <= 4096*2; blockSize*= 2){
-			ratio = 4096*2 / blockSize;
+		for (blockSize = 128; blockSize <= 4096; blockSize*= 2){
+			ratio = 4096 / blockSize;
 			printf("blockSize: %d, blockCount: %ld\n",blockSize, blockCount * ratio);
 			start = now();
 			thread_read(blockSize, blockCount * ratio, fileName, threadNum);

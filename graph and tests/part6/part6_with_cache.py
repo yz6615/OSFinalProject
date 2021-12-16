@@ -12,7 +12,7 @@ for line in file:
     blockSize.append(line[0])
     performance.append(round(float(line[1]),1))
     count += 1
-    if count == 7:
+    if count == 5:
         count = 0
         threads.append((blockSize,performance))
         blockSize= []
