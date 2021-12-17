@@ -1,9 +1,9 @@
 # OSFinalProject
 NYU FALL2021 OS Final Project
 
-token:
-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
-
 run:
 sudo chmod +x build.sh
 ./build.sh
+./run <filename> [-r|-w] <block_size> <block_count>
+./run2 <filename> <block_size>
+./fast <file_to_read>
